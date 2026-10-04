@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crop.photo — PMM Growth Sprint | Surya Sharma</title>
+<meta name="description" content="An independent PMM growth sprint for Crop.photo by Surya Sharma.">
+<style>
+:root{--ink:#101014;--muted:#686870;--line:#e8e8eb;--bg:#f7f7f5;--purple:#7850eb;--lilac:#eee9ff;--green:#178866;--blue:#4675eb;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}.nav{position:sticky;top:0;z-index:10;background:rgba(247,247,245,.86);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:16px 5vw;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:850;letter-spacing:-.04em}.navlinks{display:flex;gap:24px;font-size:13px;color:var(--muted)}.navlinks a{text-decoration:none}
+.hero{background:#101014;color:#fff;padding:110px 7vw 90px;position:relative;overflow:hidden}.orb{position:absolute;width:620px;height:620px;border-radius:50%;right:-180px;top:-250px;background:radial-gradient(circle at 40% 45%,#9b77ff,transparent 60%);opacity:.7}.eyebrow{color:#bba9ff;font-size:12px;font-weight:800;letter-spacing:.15em}.hero h1{font-size:clamp(54px,8vw,112px);line-height:.92;letter-spacing:-.07em;max-width:1050px;margin:24px 0}.hero p{max-width:730px;font-size:20px;line-height:1.55;color:#bdbdc6}.pill{display:inline-flex;padding:10px 15px;border-radius:999px;background:#7b52ed;color:white;font-size:12px;font-weight:800;letter-spacing:.04em}.hero-meta{display:flex;gap:45px;margin-top:55px}.metric strong{display:block;font-size:32px}.metric span{font-size:12px;color:#8f8f99}
+.container{max-width:1250px;margin:auto;padding:100px 5vw}.sectionhead{display:flex;justify-content:space-between;gap:50px;align-items:end;margin-bottom:45px}.kicker{font-size:12px;font-weight:800;letter-spacing:.13em;color:var(--purple)}h2{font-size:clamp(38px,5vw,66px);letter-spacing:-.06em;line-height:.98;margin:12px 0 0;max-width:780px}.lead{max-width:530px;color:var(--muted);line-height:1.65;font-size:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;min-height:240px}.card .num{color:var(--purple);font-weight:850;font-size:12px}.card h3{font-size:24px;letter-spacing:-.04em}.card p{color:var(--muted);line-height:1.65}
+.audit{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}.dark{background:#101014;color:#fff;border-radius:30px;padding:42px}.dark p{color:#a8a8b1;line-height:1.65}.score{background:#fff;border-radius:25px;color:#101014;padding:30px}.scoretop{display:flex;justify-content:space-between;align-items:end}.scorebig{font-size:76px;font-weight:850;letter-spacing:-.08em}.bar{height:10px;background:#e8e8eb;border-radius:99px;margin:22px 0 30px;overflow:hidden}.bar i{display:block;height:100%;background:var(--purple);border-radius:99px}.row{display:grid;grid-template-columns:1fr auto;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}.row span:last-child{font-weight:800}
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.step{padding:17px 20px;background:#fff;border:1px solid var(--line);border-radius:15px;font-weight:750}.arrow{color:#aaa}
+.mock{background:#fff;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:0 25px 70px rgba(20,20,30,.08)}.mockbar{padding:15px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px}.mockbody{padding:55px 7vw 70px}.mockbody h3{font-size:58px;line-height:.95;letter-spacing:-.06em;max-width:700px;margin:20px 0}.mockbody p{color:var(--muted);max-width:600px;font-size:18px;line-height:1.55}.cta{display:inline-block;margin-top:20px;padding:15px 21px;background:#101014;color:#fff;border-radius:99px;text-decoration:none;font-weight:800}.scoremini{margin-left:auto;width:320px;background:#f4f3f8;border-radius:22px;padding:24px}.mini-num{font-size:60px;font-weight:850}.creative{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.poster{min-height:440px;background:#101014;color:#fff;border-radius:28px;padding:35px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}.poster:after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-110px;bottom:-120px;background:radial-gradient(circle,#9c7cff,transparent 65%);opacity:.65}.poster h3{font-size:62px;line-height:.88;letter-spacing:-.07em;max-width:600px;position:relative;z-index:1}.smallposter{display:grid;gap:18px}.tile{background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;min-height:210px}.tile h4{font-size:28px;letter-spacing:-.04em;margin:14px 0}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.time{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px}.time b{color:var(--purple)}.time p{font-size:14px;color:var(--muted);line-height:1.55}.table{width:100%;border-collapse:collapse;background:#fff;border-radius:22px;overflow:hidden}.table th,.table td{text-align:left;padding:18px;border-bottom:1px solid var(--line);font-size:14px}.table th{color:var(--muted);font-weight:650}.quote{font-size:34px;letter-spacing:-.04em;line-height:1.2;max-width:850px}.footer{background:#101014;color:#fff;padding:80px 7vw}.footer h2{font-size:55px}.footer a{color:#c7b9ff}.disclaimer{font-size:12px;color:#777;margin-top:50px}
+@media(max-width:800px){.navlinks{display:none}.grid3,.audit,.creative,.timeline{grid-template-columns:1fr}.hero-meta{gap:20px;flex-wrap:wrap}.mockbody h3{font-size:42px}.scoremini{margin:25px 0 0;width:auto}.container{padding:70px 6vw}.sectionhead{display:block}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="brand">SURYA SHARMA / PMM</div><div class="navlinks"><a href="#thesis">Thesis</a><a href="#audit">Audit</a><a href="#creative">Creative</a><a href="#gtm">GTM</a><a href="#work">Figma</a></div></nav>
+
+<header class="hero">
+<div class="orb"></div><div class="eyebrow">INDEPENDENT PRODUCT MARKETING CASE STUDY · CROP.PHOTO</div>
+<h1>Make the catalog<br><span style="color:#a98cff">the product demo.</span></h1>
+<p>I studied Crop.photo's public product story and built a role-specific PMM concept around one question: how do you turn a powerful visual workflow into a memorable acquisition and activation loop?</p>
+<a class="pill" style="margin-top:25px;text-decoration:none" href="#thesis">Explore the thinking ↓</a>
+<div class="hero-meta"><div class="metric"><strong>01</strong><span>POSITIONING WEDGE</span></div><div class="metric"><strong>06</strong><span>FIGMA ARTIFACTS</span></div><div class="metric"><strong>01</strong><span>PLG LOOP</span></div><div class="metric"><strong>∞</strong><span>TESTABLE HYPOTHESES</span></div></div>
+</header>
+
+<section class="container" id="thesis">
+<div class="sectionhead"><div><div class="kicker">01 / THE PMM THESIS</div><h2>Don't sell AI images.<br>Sell visual consistency at scale.</h2></div><p class="lead">Crop.photo has a wide capability set. My job as PMM would be to compress that complexity into a story a busy ecommerce leader can understand in seconds.</p></div>
+<div class="grid3">
+<div class="card"><span class="num">01 — CUSTOMER</span><h3>The catalog problem</h3><p>More SKUs and channels create more repetitive image work: editing, resizing, consistency checks, approvals and rework.</p></div>
+<div class="card"><span class="num">02 — POSITIONING</span><h3>The workflow, not the generator</h3><p>Position Crop.photo around the repeatable system from source image → recipe → bulk processing → channel-ready output.</p></div>
+<div class="card"><span class="num">03 — PMM JOB</span><h3>Turn capability into proof</h3><p>Let prospects experience the product on their own catalog before asking them to sit through a generic demo.</p></div>
+</div>
+</section>
+
+<section class="container" id="audit" style="padding-top:30px">
+<div class="sectionhead"><div><div class="kicker">02 / THE ACQUISITION WEDGE</div><h2>Free Visual Consistency Audit</h2></div><p class="lead">A product-led lead magnet that demonstrates value instead of describing it.</p></div>
+<div class="audit"><div class="dark"><span class="pill">UPLOAD 10 SKUS</span><h3 style="font-size:48px;letter-spacing:-.06em;line-height:.98">Give me your catalog.<br>I'll show you the gaps.</h3><p>Score product fidelity, framing, background consistency, channel readiness and brand coherence. Then show three transformations using the product's visual workflow.</p><div class="flow"><div class="step">Audit</div><div class="arrow">→</div><div class="step">Proof</div><div class="arrow">→</div><div class="step">Recipe</div><div class="arrow">→</div><div class="step">Pilot</div></div></div>
+<div class="score"><div class="scoretop"><div><small>VISUAL CONSISTENCY</small><div class="scorebig">82</div></div><div style="color:var(--muted)">/100</div></div><div class="bar"><i style="width:82%"></i></div>
+<div class="row"><span>Product fidelity</span><span>98</span></div><div class="row"><span>Channel readiness</span><span>74</span></div><div class="row"><span>Brand consistency</span><span>76</span></div><div class="row"><span>Framing consistency</span><span>81</span></div>
+<div style="margin-top:25px;padding:18px;background:var(--lilac);border-radius:16px;font-size:13px"><b>Recommended next step</b><br>Build a reusable Recipe and test it across 50 SKUs.</div></div></div>
+</section>
+
+<section class="container" id="work">
+<div class="sectionhead"><div><div class="kicker">03 / PRODUCT MARKETING IN Figma</div><h2>Strategy becomes tangible.</h2></div><p class="lead">I built the campaign as a system, not a single pretty screen.</p></div>
+<div class="mock"><div class="mockbar"><b>CROP.PHOTO</b><span>Product · Use cases · Resources</span></div><div class="mockbody"><div style="display:flex;gap:50px;flex-wrap:wrap"><div style="flex:1;min-width:300px"><span class="pill" style="color:#101014;background:#eee9ff">NEW · FREE AUDIT</span><h3>Is your product catalog visually consistent?</h3><p>Find the visual gaps costing your brand trust — then fix them at scale with AI-powered product photography and reusable workflows.</p><a class="cta" href="#">Run my free audit →</a></div><div class="scoremini"><small>VISUAL CONSISTENCY SCORE</small><div class="mini-num">82</div><div class="bar"><i style="width:82%"></i></div><small>PERSONALIZED SCORECARD</small></div></div></div></div>
+</section>
+
+<section class="container" id="creative">
+<div class="sectionhead"><div><div class="kicker">04 / CREATIVE SYSTEM</div><h2>One catalog.<br>One visual standard.</h2></div><p class="lead">A single strategic idea translated across acquisition, lifecycle and sales.</p></div>
+<div class="creative"><div class="poster"><div><span class="pill">CROP.PHOTO · AUDIT</span></div><h3>Your catalog shouldn't look like five brands.</h3><div style="position:relative;z-index:1;color:#aaa">Fix inconsistent product visuals at scale.</div></div><div class="smallposter"><div class="tile"><div class="kicker">SOCIAL / PAID</div><h4>ONE PHOTO<br>IN. EVERY CHANNEL.</h4><p style="color:var(--muted)">PDP · Marketplace · Social · Email · Ads</p></div><div class="tile"><div class="kicker">MESSAGE HIERARCHY</div><h4>Outcome → Proof → CTA</h4><p style="color:var(--muted)">Visual consistency at scale → bulk / recipes / retailer formats / Shopify & API → Run my free audit.</p></div></div></div>
+</section>
+
+<section class="container" id="gtm">
+<div class="sectionhead"><div><div class="kicker">05 / PLG + LIFECYCLE</div><h2>Build the funnel around product value.</h2></div><p class="lead">The audit isn't the destination. It's the first product interaction.</p></div>
+<div class="timeline">
+<div class="time"><b>01 · AUDIT</b><p>Scorecard completed. Capture the buyer's visual pain.</p></div>
+<div class="time"><b>02 · PROOF</b><p>Three personalized transformations. Make the value concrete.</p></div>
+<div class="time"><b>03 · WORKFLOW</b><p>Convert the winning treatment into a reusable Recipe.</p></div>
+<div class="time"><b>04 · SCALE</b><p>Move into a measurable 50-SKU pilot and paid workflow.</p></div>
+</div>
+<div style="margin-top:35px" class="flow"><div class="step">Search / LinkedIn</div><span class="arrow">→</span><div class="step">Audit</div><span class="arrow">→</span><div class="step">Sample</div><span class="arrow">→</span><div class="step">Recipe</div><span class="arrow">→</span><div class="step">Pilot</div><span class="arrow">→</span><div class="step">Expansion</div></div>
+</section>
+
+<section class="container">
+<div class="sectionhead"><div><div class="kicker">06 / SALES ENABLEMENT</div><h2>From “better images” to a business case.</h2></div><p class="lead">The seller gets a narrative and discovery questions—not a feature dump.</p></div>
+<table class="table"><tr><th>DISCOVERY</th><th>WHAT I'M TRYING TO LEARN</th><th>WHY IT MATTERS</th></tr>
+<tr><td>SKUs / month?</td><td>Catalog volume</td><td>Potential production pain</td></tr><tr><td>Channels?</td><td>Output complexity</td><td>Workflow breadth</td></tr><tr><td>Where does review stall?</td><td>Operational bottleneck</td><td>Time-to-value opportunity</td></tr><tr><td>% repetitive work?</td><td>Automation potential</td><td>Economic case</td></tr></table>
+</section>
+
+<section class="container" style="padding-top:30px">
+<div class="sectionhead"><div><div class="kicker">07 / MEASUREMENT</div><h2>Measure the behavior, not the vanity.</h2></div><p class="lead">Every strategic claim becomes a hypothesis with a metric attached.</p></div>
+<div class="grid3"><div class="card"><span class="num">ACQUISITION</span><h3>Audit CVR</h3><p>Landing-page visitors → completed audits. Test audit vs free-trial CTA.</p></div><div class="card"><span class="num">ACTIVATION</span><h3>Activated SKUs</h3><p>Track products moving through the core workflow, not just account creation.</p></div><div class="card"><span class="num">COMMERCIAL</span><h3>Pilot → Paid</h3><p>Measure whether personalized proof creates qualified commercial intent.</p></div></div>
+</section>
+
+<section class="container">
+<div class="dark" style="border-radius:30px"><div class="kicker" style="color:#bba9ff">WHAT I WOULD TEST NEXT</div><div class="quote">“Consistency” vs “production speed” as the hero benefit. Personalized sample vs generic demo. Audit vs free trial. 10-SKU vs 50-SKU pilot.</div><p style="margin-top:28px">This is where the PMM loop closes: strategy creates a hypothesis; the product experience creates proof; measurement decides what survives.</p></div>
+</section>
+
+<footer class="footer"><div class="eyebrow">SURYA SHARMA · PRODUCT MARKETING</div><h2>Complex product.<br>Simple story.<br>Measurable motion.</h2><p style="color:#aaa;max-width:650px;line-height:1.6">Independent portfolio exercise for the Crop.photo / Evolphin opportunity. Product capabilities were researched from public sources; the audit, positioning, creative system, funnel and experiments are my own proposals.</p><p><a href="https://www.figma.com/design/HJS80H8skjqMnqPWusJkpt">Open the editable Figma file →</a></p><p><a href="https://github.com/sunny-side-upp/1st-SideUp">View the GitHub portfolio →</a></p><div class="disclaimer">No confidential employer information used. Hypothetical scores, funnel metrics and campaign results are clearly presented as concepts, not real Crop.photo results.</div></footer>
+</body></html>
