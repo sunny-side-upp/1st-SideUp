@@ -1,0 +1,1557 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IBM webMethods Hybrid Integration for Healthcare: Trusted by leading healthcare organizations. Unify EHR systems, ensure HIPAA compliance, and drive interoperability with HL7 and FHIR.">
+    <meta name="keywords" content="healthcare integration platform, hybrid integration, HL7, FHIR, HIPAA-compliant integration, IBM webMethods, API-led connectivity, healthcare interoperability, EHR connectivity solutions, no-code integration, healthcare API solutions">
+    <meta name="robots" content="index, follow">
+    <title>Healthcare Integration with IBM webMethods Hybrid Integration | IBM</title>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Healthcare Integration with IBM webMethods Hybrid Integration",
+        "description": "IBM webMethods Hybrid Integration for Healthcare: Unify EHR systems, ensure HIPAA compliance, and drive interoperability with HL7 and FHIR.",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.ibm.com"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Solutions",
+                    "item": "https://www.ibm.com/solutions"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Healthcare",
+                    "item": "https://www.ibm.com/industries/healthcare"
+                }
+            ]
+        }
+    }
+    </script>
+    <style>
+        :root {
+            --ibm-blue: #0f62fe;
+            --ibm-dark-blue: #002d9c;
+            --ibm-black: #161616;
+            --ibm-white: #ffffff;
+            --ibm-gray-10: #f4f4f4;
+            --ibm-gray-20: #e0e0e0;
+            --ibm-gray-70: #525252;
+            --ibm-gray-100: #161616;
+            --instana-orange: #f5a623;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+        }
+
+        body {
+            color: var(--ibm-black);
+            line-height: 1.6;
+            background-color: var(--ibm-white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background-color: var(--ibm-dark-blue);
+            color: var(--ibm-white);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--ibm-gray-20);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .ibm-logo {
+            width: 70px;
+            height: auto;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--ibm-white);
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--ibm-blue);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--ibm-white);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 101;
+            min-width: 200px;
+            border-radius: 4px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--ibm-black);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--ibm-gray-10);
+            color: var(--ibm-blue);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+        }
+
+        .search-bar input {
+            padding: 0.5rem;
+            border: 1px solid var(--ibm-gray-20);
+            border-radius: 4px 0 0 4px;
+            font-size: 0.875rem;
+            background-color: var(--ibm-white);
+            color: var(--ibm-black);
+        }
+
+        .search-bar button {
+            padding: 0.5rem;
+            background-color: var(--ibm-blue);
+            color: var(--ibm-white);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #0353e9;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--ibm-dark-blue), var(--ibm-blue));
+            color: var(--ibm-white);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .rating {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating span {
+            color: #f5a623;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .cta-button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .cta-button.primary {
+            background-color: var(--ibm-blue);
+            color: var(--ibm-white);
+            border: none;
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            color: var(--ibm-white);
+            border: 1px solid var(--ibm-white);
+        }
+
+        .cta-button.try-free {
+            background-color: var(--instana-orange);
+            color: var(--ibm-black);
+            border: none;
+        }
+
+        .cta-button.primary:hover {
+            background-color: #0353e9;
+            transform: translateY(-2px);
+        }
+
+        .cta-button.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .cta-button.try-free:hover {
+            background-color: #e69520;
+            transform: translateY(-2px);
+        }
+
+        .video-link {
+            color: var(--ibm-white);
+            text-decoration: underline;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        .video-link:hover {
+            color: var(--ibm-blue);
+        }
+
+        .breadcrumb {
+            background-color: var(--ibm-gray-10);
+            padding: 0.5rem 2rem;
+        }
+
+        .breadcrumb-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--ibm-gray-70);
+            font-size: 0.875rem;
+        }
+
+        .maximo-nav {
+            background-color: var(--ibm-black);
+            color: var(--ibm-white);
+            padding: 0.5rem 2rem;
+        }
+
+        .maximo-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .maximo-nav-container a {
+            color: var(--ibm-white);
+            text-decoration: none;
+            margin-right: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+
+        .maximo-nav-container a:hover {
+            color: var(--ibm-blue);
+        }
+
+        .trusted-section {
+            padding: 2rem 0;
+            text-align: center;
+            background-color: var(--ibm-white);
+        }
+
+        .trusted-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .trusted-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        .trusted-item {
+            font-size: 1rem;
+            color: var(--ibm-gray-70);
+            border: 1px solid var(--ibm-gray-20);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .ai-in-healthcare {
+            padding: 4rem 0;
+            background-color: var(--ibm-gray-10);
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ai-card {
+            background-color: var(--ibm-white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .ai-icon {
+            width: 48px;
+            height: 48px;
+            color: var(--ibm-blue);
+            margin-bottom: 1rem;
+        }
+
+        .ai-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--ibm-blue);
+        }
+
+        .ai-card p {
+            color: var(--ibm-gray-70);
+            margin-bottom: 1rem;
+        }
+
+        .ai-card a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .ai-card a:hover {
+            text-decoration: underline;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .impact-card {
+            padding: 1.5rem;
+            background-color: var(--ibm-gray-10);
+            border-radius: 4px;
+        }
+
+        .impact-card h3 {
+            font-size: 1.5rem;
+            color: var(--ibm-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-card p {
+            color: var(--ibm-gray-70);
+            font-size: 1rem;
+        }
+
+        .impact-card a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .use-cases {
+            padding: 4rem 0;
+            background-color: var(--ibm-white);
+        }
+
+        .use-cases-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .use-case {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .use-case-icon {
+            width: 48px;
+            height: 48px;
+            color: var(--ibm-blue);
+        }
+
+        .use-case h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--ibm-blue);
+        }
+
+        .use-case p {
+            color: var(--ibm-gray-70);
+        }
+
+        .quick-start {
+            padding: 4rem 0;
+            background-color: var(--ibm-gray-10);
+            text-align: center;
+        }
+
+        .quick-start-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quick-start-card {
+            padding: 1.5rem;
+            background-color: var(--ibm-white);
+            border-radius: 4px;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quick-start-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .quick-start-icon {
+            width: 48px;
+            height: 48px;
+            color: var(--ibm-blue);
+            margin-bottom: 1rem;
+        }
+
+        .quick-start-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--ibm-blue);
+        }
+
+        .quick-start-card p {
+            margin-bottom: 1rem;
+            color: var(--ibm-gray-70);
+        }
+
+        .quick-start-card a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .connector-link {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .connector-link svg {
+            margin-left: 0.5rem;
+            width: 16px;
+            height: 16px;
+        }
+
+        .industry-segments {
+            padding: 4rem 0;
+            background-color: var(--ibm-gray-10);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--ibm-gray-20);
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1.125rem;
+            color: var(--ibm-gray-70);
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .tab:hover {
+            color: var(--ibm-blue);
+        }
+
+        .tab.active {
+            color: var(--ibm-blue);
+            font-weight: 500;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--ibm-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .segment-content {
+            padding: 2rem;
+            background-color: var(--ibm-white);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .segment-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            object-fit: cover;
+        }
+
+        .segment-capabilities {
+            margin: 1rem 0 0;
+        }
+
+        .capabilities-item {
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--ibm-gray-20);
+            padding-bottom: 0.5rem;
+        }
+
+        .capabilities-question {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--ibm-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .capabilities-question a.click-here {
+            color: var(--ibm-blue);
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+            text-decoration: underline;
+        }
+
+        .capabilities-answer {
+            margin-top: 0.5rem;
+            color: var(--ibm-gray-70);
+            display: none;
+        }
+
+        .capabilities-item.active .capabilities-answer {
+            display: block;
+        }
+
+        .capabilities-toggle {
+            font-size: 1.5rem;
+            color: var(--ibm-blue);
+        }
+
+        .capabilities-item.active .capabilities-toggle::after {
+            content: '-';
+        }
+
+        .capabilities-item .capabilities-toggle::after {
+            content: '+';
+        }
+
+        .segment-capabilities ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .segment-capabilities li {
+            margin-bottom: 0.5rem;
+            color: var(--ibm-gray-70);
+        }
+
+        .segment-capabilities li strong {
+            color: var(--ibm-black);
+        }
+
+        .segment-quote {
+            font-style: italic;
+            color: var(--ibm-gray-70);
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid var(--ibm-blue);
+        }
+
+        .segment-quote-author {
+            font-size: 0.875rem;
+            color: var(--ibm-gray-70);
+        }
+
+        .segment-stats {
+            margin: 0.5rem 0;
+            color: var(--ibm-blue);
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .segment-stats a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+
+        .segment-stats a:hover {
+            text-decoration: underline;
+        }
+
+        .insights-content {
+            padding: 2rem;
+            background-color: var(--ibm-white);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .insights-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .insights-item h4 {
+            font-size: 1.25rem;
+            color: var(--ibm-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .insights-item p {
+            color: var(--ibm-gray-70);
+        }
+
+        .insights-item a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+        }
+
+        .insights-item a:hover {
+            text-decoration: underline;
+        }
+
+        .awards-banner {
+            padding: 1rem 0;
+            text-align: center;
+            background-color: var(--ibm-dark-blue);
+            color: var(--ibm-white);
+        }
+
+        .awards-content {
+            padding: 1rem;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .awards-text {
+            text-align: center;
+        }
+
+        .awards-text h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .awards-text p {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .awards-text .cta-button {
+            background-color: var(--ibm-white);
+            color: var(--ibm-blue);
+            border: 1px solid var(--ibm-blue);
+            padding: 8px 16px;
+            font-size: 0.875rem;
+        }
+
+        .case-studies {
+            padding: 4rem 0;
+            background-color: var(--ibm-white);
+        }
+
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .case-study-card {
+            background-color: var(--ibm-gray-10);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .case-study-content {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .case-study-card h3 {
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem;
+            font-weight: 400;
+            color: var(--ibm-blue);
+        }
+
+        .case-study-stat {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin: 0.5rem 0;
+            color: var(--ibm-blue);
+        }
+
+        .case-study-card p {
+            margin: 0 0 1rem;
+            color: var(--ibm-gray-70);
+            flex-grow: 1;
+        }
+
+        .case-study-card a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-weight: 400;
+            margin-top: auto;
+        }
+
+        .explore-more {
+            padding: 2rem 0;
+            background-color: var(--ibm-gray-10);
+            text-align: center;
+        }
+
+        .explore-more h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .explore-more ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .explore-more li {
+            margin-bottom: 0.5rem;
+        }
+
+        .explore-more a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .explore-more a:hover {
+            text-decoration: underline;
+        }
+
+        .final-cta {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--ibm-dark-blue), var(--ibm-blue));
+            color: var(--ibm-white);
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .final-cta p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-section {
+            padding: 4rem 0;
+            background-color: var(--ibm-gray-10);
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--ibm-gray-20);
+            padding-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--ibm-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            margin-top: 1rem;
+            color: var(--ibm-gray-70);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--ibm-blue);
+        }
+
+        .faq-item.active .faq-toggle::after {
+            content: '-';
+        }
+
+        .faq-item .faq-toggle::after {
+            content: '+';
+        }
+
+        .faq-answer a {
+            color: var(--ibm-blue);
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .faq-answer a:hover {
+            text-decoration: underline;
+        }
+
+        .section-heading {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-heading h2 {
+            font-size: 2.25rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-heading p {
+            font-size: 1.125rem;
+            color: var(--ibm-gray-70);
+        }
+
+        footer {
+            background-color: var(--ibm-gray-100);
+            color: var(--ibm-white);
+            padding: 4rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--ibm-white);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: var(--ibm-gray-20);
+        }
+
+        .footer-bottom a {
+            color: var(--ibm-white);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tab {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="https://www.ibm.com">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" class="ibm-logo">
+            </a>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="#">Products</a>
+                        <div class="dropdown-content">
+                            <a href="https://www.ibm.com/products/webmethods-hybrid-integration">webMethods Hybrid Integration</a>
+                            <a href="https://www.ibm.com/products/cloud-pak-for-integration">Cloud Pak for Integration</a>
+                            <a href="https://www.ibm.com/products/api-connect">API Connect</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Industries</a>
+                        <div class="dropdown-content">
+                            <a href="https://www.ibm.com/industries/healthcare">Healthcare</a>
+                            <a href="https://www.ibm.com/industries/financial-services">Financial Services</a>
+                            <a href="https://www.ibm.com/industries/retail">Retail</a>
+                        </div>
+                    </li>
+                    <li><a href="https://www.ibm.com/services">Services</a></li>
+                    <li><a href="https://www.ibm.com/support">Support</a></li>
+                </ul>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search IBM">
+                    <button>🔍</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Transform Healthcare with IBM webMethods Hybrid Integration</h1>
+            <p>Unify EHR systems, ensure HIPAA compliance, and drive interoperability with HL7 and FHIR standards—trusted by global healthcare leaders.</p>
+            <div class="rating">
+                <span>★★★★★</span> 4.5/5 on G2
+            </div>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button try-free">Try for Free</a>
+                <a href="#" class="cta-button primary">Request a Demo</a>
+                <a href="#" class="cta-button secondary">Watch Overview</a>
+            </div>
+            <a href="#" class="video-link">See how it works (2:30)</a>
+        </div>
+    </section>
+
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="https://www.ibm.com">Home</a> <span>›</span>
+            <a href="https://www.ibm.com/solutions">Solutions</a> <span>›</span>
+            <a href="https://www.ibm.com/industries/healthcare">Healthcare</a> <span>›</span>
+            <span>webMethods Hybrid Integration</span>
+        </div>
+    </div>
+
+    <div class="maximo-nav">
+        <div class="maximo-nav-container">
+            <a href="#">Overview</a>
+            <a href="#">Features</a>
+            <a href="#">Resources</a>
+            <a href="#">Case Studies</a>
+            <a href="#">Get Started</a>
+        </div>
+    </div>
+
+    <section class="trusted-section">
+        <div class="container">
+            <h2>Trusted by Global Healthcare Leaders</h2>
+            <div class="trusted-list">
+                <span class="trusted-item">Maccabi Healthcare Services</span>
+                <span class="trusted-item">Hong Kong Hospital Authority</span>
+                <span class="trusted-item">PharmLog</span>
+                <span class="trusted-item">Aetna</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-in-healthcare">
+        <div class="container">
+            <div class="section-heading">
+                <h2>AI-Driven Solutions in Healthcare</h2>
+                <p>Discover how AI enhances healthcare workflows with IBM webMethods Hybrid Integration.</p>
+            </div>
+            <div class="ai-grid">
+                <div class="ai-card">
+                    <svg class="ai-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Predictive Patient Care</h3>
+                    <p>AI analyzes EHR data to predict readmission risks, reducing rates by up to 20%.</p>
+                    <a href="https://www.ibm.com/products/webmethods-hybrid-integration">Explore AI Features</a>
+                </div>
+                <div class="ai-card">
+                    <svg class="ai-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Automated Claims</h3>
+                    <p>Streamline payer workflows with AI, cutting turnaround times by 30%.</p>
+                    <a href="https://www.ibm.com/webmethods-ai-automation">See Automation in Action</a>
+                </div>
+                <div class="ai-card">
+                    <svg class="ai-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Secure Data Exchange</h3>
+                    <p>AI ensures seamless FHIR-based interoperability with HIPAA compliance.</p>
+                    <a href="https://www.ibm.com/products/webmethods-hybrid-integration">Learn More</a>
+                </div>
+            </div>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h3>50%</h3>
+                    <p>Faster patient data access for providers.</p>
+                    <a href="https://www.ibm.com/case-studies/maccabi-healthcare">See Case Study</a>
+                </div>
+                <div class="impact-card">
+                    <h3>30%</h3>
+                    <p>Reduction in integration costs.</p>
+                    <a href="https://www.ibm.com/case-studies/hong-kong-ha">See Case Study</a>
+                </div>
+                <div class="impact-card">
+                    <h3>35%</h3>
+                    <p>Improved supply chain efficiency.</p>
+                    <a href="https://www.ibm.com/case-studies/pharmlog">See Case Study</a>
+                </div>
+                <div class="impact-card">
+                    <h3>25%</h3>
+                    <p>Faster claims adjudication for payers.</p>
+                    <a href="https://www.ibm.com/case-studies/aetna">See Case Study</a>
+                </div>
+            </div>
+            <div class="section-heading">
+                <h2>Real-World Use Cases</h2>
+                <p>Discover how IBM webMethods Hybrid Integration addresses key healthcare challenges.</p>
+            </div>
+            <div class="use-cases-list">
+                <div class="use-case">
+                    <svg class="use-case-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <div>
+                        <h3>Streamlining Medical Reports</h3>
+                        <p>Automate the generation and sharing of medical reports to improve accuracy and compliance. Benefits include reducing manual errors by 40%, ensuring HIPAA compliance, and enabling real-time sharing.</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <svg class="use-case-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <div>
+                        <h3>Integrating Diverse Data Types</h3>
+                        <p>Connect structured and unstructured healthcare data for a unified patient view. Handles EHR data, clinical notes, and IoT sensor data for continuous monitoring.</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <svg class="use-case-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <div>
+                        <h3>Applications in Action</h3>
+                        <p>Support critical healthcare applications with seamless integration. Connects EHR systems (Epic, Cerner), telemedicine platforms, and servers for care coordination.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quick-start">
+        <div class="container">
+            <h2>Get Started with Healthcare Integration</h2>
+            <div class="quick-start-grid">
+                <div class="quick-start-card">
+                    <svg class="quick-start-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Step 1: Assess Your Needs</h3>
+                    <p>Evaluate your integration requirements and identify gaps in your current systems.</p>
+                    <a href="#">Get the Checklist</a>
+                </div>
+                <div class="quick-start-card">
+                    <svg class="quick-start-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Step 2: Explore Solutions</h3>
+                    <p>Connect to key systems like Epic, Cerner, Salesforce, SAP, and Oracle.</p>
+                    <a href="#" class="connector-link">See All 600+ Connectors <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
+                </div>
+                <div class="quick-start-card">
+                    <svg class="quick-start-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Step 3: See It in Action</h3>
+                    <p>Request a demo to see how webMethods Hybrid Integration works for healthcare.</p>
+                    <a href="#" class="cta-button primary">Request a Demo</a>
+                </div>
+                <div class="quick-start-card">
+                    <svg class="quick-start-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm1-12h-2v6h2zm0 8h-2v2h2z"/></svg>
+                    <h3>Step 4: Calculate ROI</h3>
+                    <p>Discover the value of webMethods with the Forrester TEI study.</p>
+                    <a href="https://www.ibm.com/webmethods-forrester-tei" class="cta-button secondary">Calculate ROI</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="industry-segments">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Solutions for Every Healthcare Segment</h2>
+                <p>Tailored hybrid integration solutions for providers, payers, life sciences, and the latest industry insights.</p>
+            </div>
+            <div class="tabs">
+                <div class="tab active" data-tab="providers">Providers</div>
+                <div class="tab" data-tab="payers">Payers</div>
+                <div class="tab" data-tab="life-sciences">Life Sciences</div>
+                <div class="tab" data-tab="insights">Industry Insights</div>
+            </div>
+            <div class="tab-content active" id="providers">
+                <div class="segment-content">
+                    <p>Securely connect patient data across EHR systems like Epic and Cerner with webMethods Hybrid Integration, ensuring real-time access for better care delivery.</p>
+                    <div class="segment-capabilities">
+                        <div class="capabilities-item">
+                            <div class="capabilities-question">
+                                <span>Key Capabilities</span>
+                                <a href="#" class="click-here">Click here to expand</a>
+                                <span class="capabilities-toggle"></span>
+                            </div>
+                            <div class="capabilities-answer">
+                                <ul>
+                                    <li><strong>EHR Integration:</strong> Seamless connectivity with systems like Epic and Cerner for unified patient data.</li>
+                                    <li><strong>Real-Time Data Access:</strong> Enables instant access to patient records for faster clinical decisions.</li>
+                                    <li><strong>Compliance Automation:</strong> Ensures HIPAA and GDPR compliance with automated workflows.</li>
+                                    <li><strong>Proven Impact:</strong> Providers using webMethods Hybrid Integration have reported a 75% reduction in data access time, enabling faster clinical decisions. <a href="https://www.ibm.com/case-studies/providence-health">See Providence Health Case Study</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=200&q=80" alt="Doctor using a tablet to access patient data" class="segment-image">
+                    <div class="segment-stats">
+                        75% Reduction in Data Access Time
+                        <a href="https://www.ibm.com/case-studies/providence-health">Source</a>
+                    </div>
+                    <blockquote class="segment-quote">
+                        "webMethods Hybrid Integration reduced our claims processing time by 40%." 
+                        <span class="segment-quote-author">— CIO, Providence Health (<a href="https://www.ibm.com/case-studies/providence-health">Source</a>)</span>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="tab-content" id="payers">
+                <div class="segment-content">
+                    <p>Streamline operations by automating claims processing and improving interoperability with FHIR standards using webMethods Hybrid Integration.</p>
+                    <div class="segment-capabilities">
+                        <div class="capabilities-item">
+                            <div class="capabilities-question">
+                                <span>Key Capabilities</span>
+                                <a href="#" class="click-here">Click here to expand</a>
+                                <span class="capabilities-toggle"></span>
+                            </div>
+                            <div class="capabilities-answer">
+                                <ul>
+                                    <li><strong>Automated Claims Processing:</strong> Reduces turnaround times with AI-driven workflows.</li>
+                                    <li><strong>API-Led Connectivity:</strong> Securely manages healthcare APIs for efficient data exchange.</li>
+                                    <li><strong>Cost Optimization:</strong> Lowers operational costs through streamlined processes.</li>
+                                    <li><strong>Proven Impact:</strong> Payers have achieved up to 60% faster claims processing with webMethods Hybrid Integration’s automation tools. <a href="https://www.ibm.com/case-studies/blue-cross">See Blue Cross Case Study</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=200&q=80" alt="Professional reviewing claims data on a computer" class="segment-image">
+                    <div class="segment-stats">
+                        60% Faster Claims Processing
+                        <a href="https://www.ibm.com/case-studies/blue-cross">Source</a>
+                    </div>
+                    <blockquote class="segment-quote">
+                        "Integration with webMethods Hybrid Integration cut our operational costs significantly." 
+                        <span class="segment-quote-author">— Director, Blue Cross (<a href="https://www.ibm.com/case-studies/blue-cross">Source</a>)</span>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="tab-content" id="life-sciences">
+                <div class="segment-content">
+                    <p>Accelerate clinical trials with secure data sharing and compliance using webMethods Hybrid Integration’s B2B integration capabilities.</p>
+                    <div class="segment-capabilities">
+                        <div class="capabilities-item">
+                            <div class="capabilities-question">
+                                <span>Key Capabilities</span>
+                                <a href="#" class="click-here">Click here to expand</a>
+                                <span class="capabilities-toggle"></span>
+                            </div>
+                            <div class="capabilities-answer">
+                                <ul>
+                                    <li><strong>B2B Integration:</strong> Securely shares data with partners and suppliers.</li>
+                                    <li><strong>Trial Data Management:</strong> Speeds up clinical trial data integration for faster research timelines.</li>
+                                    <li><strong>Regulatory Compliance:</strong> Ensures adherence to FDA and GDPR standards.</li>
+                                    <li><strong>Proven Impact:</strong> Life sciences companies have integrated trial data 80% faster, speeding up research timelines. <a href="https://www.ibm.com/case-studies/novartis">See Novartis Case Study</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1581092160607-0e8d0e3b01f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=200&q=80" alt="Researcher in a lab working on clinical trials" class="segment-image">
+                    <div class="segment-stats">
+                        80% Faster Trial Data Integration
+                        <a href="https://www.ibm.com/case-studies/novartis">Source</a>
+                    </div>
+                    <blockquote class="segment-quote">
+                        "We integrated our trial data in days, not months with webMethods Hybrid Integration." 
+                        <span class="segment-quote-author">— Head of IT, Novartis (<a href="https://www.ibm.com/case-studies/novartis">Source</a>)</span>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="tab-content" id="insights">
+                <div class="insights-content">
+                    <h3>Industry Insights, News, and Trends</h3>
+                    <div class="insights-item">
+                        <h4>Trend: AI-Powered Interoperability on the Rise</h4>
+                        <p>AI is transforming healthcare interoperability by automating data mapping and improving FHIR adoption, leading to faster and more accurate data exchange.</p>
+                        <a href="https://www.ibm.com/blogs/healthcare-ai-interoperability">Read More</a>
+                    </div>
+                    <div class="insights-item">
+                        <h4>News: HIPAA Updates for 2025</h4>
+                        <p>New HIPAA regulations emphasize stricter data privacy controls for cloud-based healthcare systems, impacting integration strategies.</p>
+                        <a href="https://www.hhs.gov/hipaa-updates-2025">Learn More</a>
+                    </div>
+                    <div class="insights-item">
+                        <h4>Resource: Healthcare Integration Trends</h4>
+                        <p>Explore the latest trends in healthcare integration with IBM’s comprehensive whitepaper.</p>
+                        <a href="https://www.ibm.com/whitepapers/healthcare-integration-trends">Download Whitepaper</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="awards-banner">
+        <div class="awards-content">
+            <div class="awards-text">
+                <h2>Recognized by webMethods</h2>
+                <p>webMethods is named a leader in Gartner Peer Insights.</p>
+                <a href="https://www.ibm.com/api-management/gartner-peer-insights" class="cta-button">Read the Report</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-studies">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Client Success Stories</h2>
+                <p>Real Customers, Real Stories</p>
+            </div>
+            <div class="case-studies-grid">
+                <div class="case-study-card">
+                    <div class="case-study-content">
+                        <h3>Maccabi Healthcare Services</h3>
+                        <div class="case-study-stat">50%</div>
+                        <p>Increased patient data access speed by 50% with seamless EHR integration using webMethods Hybrid Integration. <a href="https://www.ibm.com/case-studies/maccabi-healthcare">Source</a></p>
+                        <a href="#">Read Case Study</a>
+                    </div>
+                </div>
+                <div class="case-study-card">
+                    <div class="case-study-content">
+                        <h3>Hong Kong Hospital Authority</h3>
+                        <div class="case-study-stat">30%</div>
+                        <p>Reduced integration costs by 30% with webMethods Hybrid Integration, enabling efficient data sharing across systems. <a href="https://www.ibm.com/case-studies/hong-kong-ha">Source</a></p>
+                        <a href="#">Read Case Study</a>
+                    </div>
+                </div>
+                <div class="case-study-card">
+                    <div class="case-study-content">
+                        <h3>PharmLog</h3>
+                        <div class="case-study-stat">35%</div>
+                        <p>Improved supply chain efficiency by 35% using webMethods Hybrid Integration to connect logistics and inventory systems. <a href="https://www.ibm.com/case-studies/pharmlog">Source</a></p>
+                        <a href="#">Read Case Study</a>
+                    </div>
+                </div>
+                <div class="case-study-card">
+                    <div class="case-study-content">
+                        <h3>Aetna</h3>
+                        <div class="case-study-stat">25%</div>
+                        <p>Reduced claims adjudication time by 25% with webMethods Hybrid Integration’s automation of payer workflows. <a href="https://www.ibm.com/case-studies/aetna">Source</a></p>
+                        <a href="#">Read Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How does IBM webMethods Hybrid Integration ensure HIPAA compliance?</span>
+                    <span class="faq-toggle"></span>
+                </div>
+                <div class="faq-answer">
+                    <p>IBM webMethods Hybrid Integration provides end-to-end encryption, secure data handling, and compliance with FHIR and HL7 standards. It also includes features like audit trails and access controls to ensure HIPAA compliance. <a href="#">Learn More</a></p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can IBM webMethods Hybrid Integration integrate with existing EHR systems like Epic or Cerner?</span>
+                    <span class="faq-toggle"></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, IBM webMethods Hybrid Integration offers pre-built connectors for leading EHR systems such as Epic and Cerner, enabling seamless integration and data exchange. <a href="#">Explore Connectors</a></p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What are the benefits of using iPaaS for healthcare data interoperability?</span>
+                    <span class="faq-toggle"></span>
+                </div>
+                <div class="faq-answer">
+                    <p>iPaaS solutions like IBM webMethods Hybrid Integration facilitate interoperability by connecting disparate systems, standardizing data formats, and enabling real-time data exchange, which improves patient care and operational efficiency. <a href="#">Read More</a></p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What security measures are in place for healthcare data in IBM webMethods Hybrid Integration?</span>
+                    <span class="faq-toggle"></span>
+                </div>
+                <div class="faq-answer">
+                    <p>IBM webMethods Hybrid Integration employs advanced security measures including encryption, role-based access control, and continuous monitoring to protect sensitive healthcare data. <a href="#">Security Features</a></p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What kind of support and training does IBM offer for healthcare-specific use cases with webMethods Hybrid Integration?</span>
+                    <span class="faq-toggle"></span>
+                </div>
+                <div class="faq-answer">
+                    <p>IBM offers comprehensive support, including dedicated account managers, 24/7 technical support, and tailored training programs for healthcare professionals to maximize the value of webMethods Hybrid Integration. <a href="#">Support and Training</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="explore-more">
+        <div class="container">
+            <h2>Explore More IBM Healthcare Solutions</h2>
+            <ul>
+                <li><a href="https://www.ibm.com/cloud/healthcare">IBM Cloud for Healthcare</a></li>
+                <li><a href="https://www.ibm.com/blogs/healthcare">Healthcare Trends Blog</a></li>
+                <li><a href="https://www.ibm.com/api-connect/healthcare">Healthcare APIs</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to Transform Healthcare Integration?</h2>
+            <p>Join thousands of healthcare organizations already using IBM webMethods Hybrid Integration.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button try-free">Try for Free</a>
+                <a href="#" class="cta-button primary">Request a Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="https://www.ibm.com/products/webmethods-hybrid-integration">webMethods Hybrid Integration</a></li>
+                    <li><a href="https://www.ibm.com/products/cloud-pak-for-integration">Cloud Pak for Integration</a></li>
+                    <li><a href="https://www.ibm.com/products/api-connect">API Connect</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Industries</h3>
+                <ul>
+                    <li><a href="https://www.ibm.com/industries/healthcare">Healthcare</a></li>
+                    <li><a href="https://www.ibm.com/industries/financial-services">Financial Services</a></li>
+                    <li><a href="https://www.ibm.com/industries/retail">Retail</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="https://www.ibm.com/resources">Blog</a></li>
+                    <li><a href="https://www.ibm.com/whitepapers">Whitepapers</a></li>
+                    <li><a href="https://www.ibm.com/webinars">Webinars</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="https://www.ibm.com/contact">Contact Us</a></li>
+                    <li><a href="https://www.ibm.com/support">Support Portal</a></li>
+                    <li><a href="https://www.ibm.com/docs">Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 IBM Corporation. All rights reserved. <a href="https://www.ibm.com/privacy">Privacy Policy</a> | <a href="https://www.ibm.com/legal">Terms of Use</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Accordion functionality for FAQs and Capabilities
+        document.querySelectorAll('.faq-question, .capabilities-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+
+        // Prevent default click on "Click here to expand" links
+        document.querySelectorAll('.click-here').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parent = link.closest('.capabilities-item');
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
