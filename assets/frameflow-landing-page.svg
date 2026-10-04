@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1900" viewBox="0 0 1440 1900">
+<rect width="1440" height="1900" fill="#f7f7f5"/>
+<rect x="70" y="45" width="1300" height="80" rx="16" fill="#111"/>
+<text x="110" y="95" fill="white" font-family="Arial" font-size="30" font-weight="700">FRAMEFLOW</text>
+<text x="1030" y="95" fill="white" font-family="Arial" font-size="20">Product · Workflow · Resources</text>
+<text x="120" y="260" fill="#111" font-family="Arial" font-size="78" font-weight="700">Turn one product photo</text>
+<text x="120" y="350" fill="#111" font-family="Arial" font-size="78" font-weight="700">into every visual</text>
+<text x="120" y="440" fill="#111" font-family="Arial" font-size="78" font-weight="700">your store needs.</text>
+<text x="120" y="515" fill="#555" font-family="Arial" font-size="28">Create consistent, channel-ready product visuals without</text>
+<text x="120" y="555" fill="#555" font-family="Arial" font-size="28">rebuilding the production process for every SKU.</text>
+<rect x="120" y="610" width="250" height="70" rx="35" fill="#111"/>
+<text x="170" y="655" fill="white" font-family="Arial" font-size="23" font-weight="700">See the workflow →</text>
+<rect x="120" y="790" width="1200" height="420" rx="28" fill="#e7e7e2"/>
+<rect x="180" y="850" width="240" height="280" rx="18" fill="white"/>
+<text x="220" y="900" fill="#888" font-family="Arial" font-size="18">SOURCE IMAGE</text>
+<rect x="215" y="935" width="170" height="145" rx="12" fill="#cfcfc8"/>
+<text x="246" y="1015" fill="#555" font-family="Arial" font-size="20">1 SKU</text>
+<text x="470" y="1010" fill="#111" font-family="Arial" font-size="42">→</text>
+<rect x="560" y="850" width="320" height="280" rx="18" fill="white"/>
+<text x="600" y="900" fill="#888" font-family="Arial" font-size="18">FRAMEFLOW WORKFLOW</text>
+<text x="600" y="960" fill="#111" font-family="Arial" font-size="24">✓ Brand rules</text>
+<text x="600" y="1010" fill="#111" font-family="Arial" font-size="24">✓ Visual variants</text>
+<text x="600" y="1060" fill="#111" font-family="Arial" font-size="24">✓ Human approval</text>
+<text x="600" y="1110" fill="#111" font-family="Arial" font-size="24">✓ Channel formats</text>
+<text x="930" y="1010" fill="#111" font-family="Arial" font-size="42">→</text>
+<rect x="1010" y="850" width="250" height="280" rx="18" fill="white"/>
+<text x="1050" y="900" fill="#888" font-family="Arial" font-size="18">OUTPUT</text>
+<rect x="1040" y="935" width="75" height="75" rx="8" fill="#d8d8d2"/>
+<rect x="1155" y="935" width="75" height="75" rx="8" fill="#bdbdb5"/>
+<rect x="1040" y="1030" width="75" height="75" rx="8" fill="#bdbdb5"/>
+<rect x="1155" y="1030" width="75" height="75" rx="8" fill="#d8d8d2"/>
+<text x="120" y="1370" fill="#111" font-family="Arial" font-size="46" font-weight="700">Your catalog grows. Your workflow shouldn't.</text>
+<text x="120" y="1440" fill="#555" font-family="Arial" font-size="26">PDPs · Marketplaces · Paid social · Campaigns · Regional storefronts</text>
+<line x1="120" y1="1510" x2="1320" y2="1510" stroke="#ccc" stroke-width="2"/>
+<text x="120" y="1590" fill="#111" font-family="Arial" font-size="34" font-weight="700">01  Create at scale</text>
+<text x="120" y="1640" fill="#555" font-family="Arial" font-size="22">Turn existing imagery into multiple visual formats.</text>
+<text x="600" y="1590" fill="#111" font-family="Arial" font-size="34" font-weight="700">02  Stay on brand</text>
+<text x="600" y="1640" fill="#555" font-family="Arial" font-size="22">Reuse approved rules across the catalog.</text>
+<text x="1000" y="1590" fill="#111" font-family="Arial" font-size="34" font-weight="700">03  Ship faster</text>
+<text x="1000" y="1640" fill="#555" font-family="Arial" font-size="22">Reduce repetitive handoffs before publishing.</text>
+<rect x="120" y="1740" width="1200" height="80" rx="40" fill="#111"/>
+<text x="560" y="1790" fill="white" font-family="Arial" font-size="27" font-weight="700">Start with 10 products →</text>
+</svg>
