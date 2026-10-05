@@ -1,0 +1,6 @@
+# Add the exact dependencies used by the project once the original code/notebook is restored.
+# Example:
+# pandas
+# numpy
+# scikit-learn
+# matplotlib
